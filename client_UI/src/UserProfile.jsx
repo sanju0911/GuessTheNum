@@ -3,13 +3,13 @@ import Cookies from "js-cookie";
 import HighScore from "./components/ScoresComponents/HighScore";
 import YourScore from "./components/ScoresComponents/YourScore";
 import styles from "./css/UserProfile.module.css";
+import NumberInputBox from "./components/game_components/NumberInputBox";
 
 const UserProfile = ({ email }) => {
- 
   const storedEmail = email || Cookies.get("email");
 
-  const [userName, setUserName] = useState(Cookies.get("userName") || ""); 
-  const [loading, setLoading] = useState(!Cookies.get("userName")); 
+  const [userName, setUserName] = useState(Cookies.get("userName") || "");
+  const [loading, setLoading] = useState(!Cookies.get("userName"));
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const UserProfile = ({ email }) => {
         if (response.ok) {
           setUserName(data.name);
 
-          
           Cookies.set("userName", data.name, { expires: 7 });
           Cookies.set("email", storedEmail, { expires: 7 });
         } else {
@@ -43,7 +42,6 @@ const UserProfile = ({ email }) => {
       }
     };
 
-   
     if (!userName) {
       fetchUserData();
     }
@@ -65,6 +63,8 @@ const UserProfile = ({ email }) => {
       </div>
       <div className={styles.scoreSection}>
         <YourScore email={storedEmail} />
+
+        <NumberInputBox />
       </div>
     </div>
   );

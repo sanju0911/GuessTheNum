@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../css/Login.module.css";
@@ -21,9 +20,9 @@ const Login = ({ onGoToRegister, onLoginSuccess }) => {
 
       const data = await response.json();
       if (response.ok) {
-        onLoginSuccess(email); // Pass the email to the parent component
+        onLoginSuccess(email);
       } else {
-        console.error("Login response:", data); // Log response for debugging
+        console.error("Login response:", data);
         alert(data.message || "Login failed");
       }
     } catch (error) {

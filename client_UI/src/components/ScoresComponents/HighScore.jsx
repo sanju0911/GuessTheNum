@@ -1,4 +1,3 @@
-// src/components/HighScore.jsx
 import React, { useEffect, useState } from "react";
 
 const HighScore = () => {
@@ -14,7 +13,7 @@ const HighScore = () => {
         );
         const data = await response.json();
         if (response.ok) {
-          setHighScore(data.score); // Assume data contains highScore
+          setHighScore(data.score);
         } else {
           setError(data.message || "Failed to fetch high score");
         }

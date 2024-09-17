@@ -42,7 +42,7 @@
     cursor: pointer;
     border-radius: 4px;
     font-size: 16px;
-    margin-top: 10px; /* Add margin-top to create space between buttons */
+    margin-top: 10px;
   }
   
   .authForm button:hover {
