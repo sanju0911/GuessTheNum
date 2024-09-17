@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
+
 const register = async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -17,9 +18,11 @@ const register = async (req, res) => {
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
