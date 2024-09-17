@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+
+.greeting {
+  font-size: 24px;
+  color: #333;
+}
+
+.scoreSection {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+h2 {
+  color: #555;
+}
+
+.header div {
+  text-align: right;
+}

@@ -1,10 +1,12 @@
 // src/components/Login.jsx
 import React, { useState } from "react";
-import styles from "../css/Login.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "../../css/Login.module.css";
 
-const Login = () => {
+const Login = ({ onGoToRegister, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,10 +21,9 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Login successful");
-        // Handle successful login (e.g., store token, redirect)
-        console.log("Login successful:", data);
+        onLoginSuccess(email); // Pass the email to the parent component
       } else {
+        console.error("Login response:", data); // Log response for debugging
         alert(data.message || "Login failed");
       }
     } catch (error) {
@@ -56,6 +57,9 @@ const Login = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <button type="button" onClick={onGoToRegister}>
+          Go to Register
+        </button>
       </form>
     </div>
   );

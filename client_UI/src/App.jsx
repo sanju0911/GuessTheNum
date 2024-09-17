@@ -1,32 +1,53 @@
 import React, { useState } from "react";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import styles from "./css/App.module.css"; // Import your CSS module
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
+import Cookies from "js-cookie";
+import Login from "./components/login_register_components/Login";
+import Register from "./components/login_register_components/Register";
+import UserProfile from "./UserProfile";
 
 const App = () => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
-  const handleLogin = (email, password) => {
-    console.log("Logging in with", email, password);
-  };
+  const LoginWrapper = () => {
+    const navigate = useNavigate();
 
-  const handleRegister = (name, email, password) => {
-    console.log("Registering with", name, email, password);
+    return (
+      <Login
+        onGoToRegister={() => setIsRegistering(true)}
+        onLoginSuccess={(email) => {
+          Cookies.remove("email");
+          Cookies.remove("userName");
+
+          Cookies.set("email", email, { expires: 7 });
+          setUserEmail(email);
+          navigate("/profile");
+        }}
+      />
+    );
   };
 
   return (
-    <div className={styles.appContainer}>
-      <div className={styles.topButton}>
-        <button onClick={() => setIsRegistering(!isRegistering)}>
-          {isRegistering ? "Go to Login" : "Go to Register"}
-        </button>
-      </div>
-      {isRegistering ? (
-        <Register onRegister={handleRegister} />
-      ) : (
-        <Login onLogin={handleLogin} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isRegistering ? (
+              <Register onGoToLogin={() => setIsRegistering(false)} />
+            ) : (
+              <LoginWrapper />
+            )
+          }
+        />
+        <Route path="/profile" element={<UserProfile email={userEmail} />} />
+      </Routes>
+    </Router>
   );
 };
 

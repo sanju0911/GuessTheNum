@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import styles from "../css/Register.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "../../css/Register.module.css";
 
-const Register = () => {
+const Register = ({ onGoToLogin }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,6 +71,9 @@ const Register = () => {
           />
         </div>
         <button type="submit">Register</button>
+        <button type="button" onClick={onGoToLogin}>
+          Go to Login
+        </button>
       </form>
     </div>
   );

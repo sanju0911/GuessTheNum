@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  score: {
+    type: Number,
+    default: 0,
+  },
   password: {
     type: String,
     required: true,

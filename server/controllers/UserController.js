@@ -55,4 +55,50 @@ const logout = (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-module.exports = { register, login, logout };
+const getUserByEmail = async (req, res) => {
+  const email = req.query.email;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email parameter is required" });
+  }
+
+  try {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ name: user.name });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching user data" });
+  }
+};
+
+const getScore = async (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const score = user.score;
+
+    return res.status(200).json({ score });
+  } catch (error) {
+    console.error("Error fetching score:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { register, login, logout, getUserByEmail ,getScore };
